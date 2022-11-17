@@ -2,17 +2,18 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Logout from './LogoutButton'
+import { unstable_getServerSession } from 'next-auth/next'
 
-function Header() {
-    const session = true 
+async function Header() {
+   const session = await unstable_getServerSession();
     if (session) return(
         <header className='sticky top-0 z-50 bg-white flex justify-between items-center p-10 shadow-sm'>
             <div>
                 <Image  
                 className='rounded-full mx-2 object-contain' 
                 height={10}
-                width={10}
-                src='https://links.papareact.com/jne'
+                width={50}
+                src={session.user?.image!}
                 layout='fixed'
                 alt="Profile Picture"
                 
@@ -20,7 +21,7 @@ function Header() {
 
                 <div>
                     <p className='text-blue-400'>Logged in as:</p>
-                    <p className='font-bold text-lg'>Nico</p>
+                    <p className='font-bold text-lg'>{session.user?.name}</p>
 
                 </div>
             </div>

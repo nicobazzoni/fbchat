@@ -11,8 +11,8 @@ type Props = {
     initialMessages: Message[]
 }
 
-function MessageList({initialMessages}: Props) {
-    const { data: messages, error, mutate} = useSWR<Message[]>("/api/getMessages", fetcher)
+function MessageList({ initialMessages }: Props) {
+    const { data: messages, error, mutate,} = useSWR<Message[]>("/api/getMessages", fetcher)
 
     useEffect(() => { 
         const channel = clientPusher.subscribe("messages") 
@@ -20,9 +20,9 @@ function MessageList({initialMessages}: Props) {
             if (messages?.find((message) => message.id === data.id)) return;
 
             if (!messages) {
-                mutate(fetcher)
+                mutate(fetcher("/api/getMessages"), false)
             } else {
-            mutate(fetcher, {
+            mutate(fetcher , {
             optomisticData: [data, ...messages!],
             rollbackOnError: true,
             })
