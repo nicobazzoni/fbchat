@@ -10,17 +10,17 @@ type Props = {
 function SignInComponent({providers}: Props) {
 
     return (
-        <div>
-
-        
-    )
-    {Object.values(providers!).map((provider) => (
-        <div key={provider.name}>
-            <button onClick={() => {
+        <div className='flex justify-center'>
+            {Object.values(providers!).map((provider) => (
+            <div key={provider.name}>
+            <button 
+            className='p-3 bg-blue-500 rounded-lg text-white'
+            onClick={() => 
                 signIn(provider.id, {
                     callbackUrl: process.env.VERCEL_URL || "http://localhost:3000",
                 })
-            }}>
+            }
+            >
                 Sign in with {provider.name}
 
             </button>
@@ -28,8 +28,9 @@ function SignInComponent({providers}: Props) {
     ))}
 
    </div>
+    )
+        }
    
-  )
-}
+ 
 
 export default SignInComponent
